@@ -2,10 +2,17 @@ import patientData from '../../data/patientsData'
 
 import { Patient, NonSensitivePatient } from '../types'
 
-const getPatient = (): Patient[] => patientData
+const getPatients = (): Patient[] => patientData
 
-const getNonSensitivePatient = (): NonSensitivePatient[] => patientData
+const getNonSensitivePatients = (): NonSensitivePatient[] =>
+  patientData.map(({ id, name, dateOfBirth, gender, occupation }) => ({
+    id,
+    name,
+    dateOfBirth,
+    gender,
+    occupation
+  }))
 
 const addPatient = () => null
 
-export default { getNonSensitivePatient, getPatient, addPatient }
+export default { getNonSensitivePatients, getPatients, addPatient }
