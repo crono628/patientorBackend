@@ -1,6 +1,6 @@
 import patientData from '../../data/patientsData'
 
-import { Patient, NonSensitivePatient } from '../types'
+import { Patient, NonSensitivePatient, NewPatient } from '../types'
 
 const getPatients = (): Patient[] => patientData
 
@@ -13,6 +13,21 @@ const getNonSensitivePatients = (): NonSensitivePatient[] =>
     occupation
   }))
 
-const addPatient = () => null
+const findById = (id: string): Patient | undefined => {
+  const patient = patientData.find((p) => p.id === id)
+  if (!patient) {
+    throw new Error(`Patient with id ${id} not found`)
+  }
+  return patient
+}
 
-export default { getNonSensitivePatients, getPatients, addPatient }
+const addPatient = (patient: NewPatient): Patient => {
+  const newPatient = {
+    id: String(Math.max(...patientData.map((p) => Number(p.id))) + 1),
+    ...patient
+  }
+  patientData.push(newPatient)
+  return newPatient
+}
+
+export default { getNonSensitivePatients, findById, getPatients, addPatient }
